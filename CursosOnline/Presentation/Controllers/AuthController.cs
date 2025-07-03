@@ -1,4 +1,5 @@
 using CursosOnline.Core.DTOs;
+using CursosOnline.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,26 +9,28 @@ namespace CursosOnline.Presentation.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        // Aquí deberías inyectar un AuthService real
-        // private readonly AuthService _authService;
-        // public AuthController(AuthService authService) { _authService = authService; }
+        private readonly AuthService _authService;
+        public AuthController(AuthService authService)
+        {
+            _authService = authService;
+        }
 
         // POST: api/auth/register
         [HttpPost("register")]
         [AllowAnonymous]
-        public IActionResult Register([FromBody] RegisterDto dto)
+        public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto dto)
         {
-            // Implementar lógica de registro y devolver JWT
-            return Ok(new { message = "Registro exitoso (implementa lógica real)" });
+            var result = await _authService.RegisterAsync(dto);
+            return Ok(result);
         }
 
         // POST: api/auth/login
         [HttpPost("login")]
         [AllowAnonymous]
-        public IActionResult Login([FromBody] LoginDto dto)
+        public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto dto)
         {
-            // Implementar lógica de login y devolver JWT
-            return Ok(new { token = "jwt_token_ejemplo", name = "Usuario", email = dto.Email, role = "user" });
+            var result = await _authService.LoginAsync(dto);
+            return Ok(result);
         }
     }
 } 
