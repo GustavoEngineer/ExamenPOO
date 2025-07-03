@@ -15,15 +15,6 @@ namespace CursosOnline.Presentation.Controllers
             _authService = authService;
         }
 
-        // POST: api/auth/register
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<ActionResult<AuthResponseDto>> Register([FromBody] RegisterDto dto)
-        {
-            var result = await _authService.RegisterAsync(dto);
-            return Ok(result);
-        }
-
         // POST: api/auth/login
         [HttpPost("login")]
         [AllowAnonymous]

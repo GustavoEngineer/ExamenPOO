@@ -21,8 +21,7 @@ namespace CursosOnline.Core.DTOs
     public class LoginDto
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; } = null!;
+        public string Username { get; set; } = null!;
 
         [Required]
         public string Password { get; set; } = null!;
@@ -32,7 +31,7 @@ namespace CursosOnline.Core.DTOs
     {
         public string Token { get; set; } = null!;
         public string Name { get; set; } = null!;
-        public string Email { get; set; } = null!;
+        public string Username { get; set; } = null!;
         public string Role { get; set; } = null!;
     }
 } 
