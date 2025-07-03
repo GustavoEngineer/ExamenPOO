@@ -15,9 +15,30 @@ namespace CursosOnline.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task AddAsync(Course course) => throw new System.NotImplementedException();
-        public Task DeleteAsync(Course course) => throw new System.NotImplementedException();
-        public Task<bool> ExistsWithTitleAsync(string title) => throw new System.NotImplementedException();
+        public async Task AddAsync(Course course)
+        {
+            await _context.Courses.AddAsync(course);
+            await _context.SaveChangesAsync();
+        }
+        public async Task DeleteAsync(Course course)
+        {
+            _context.Courses.Remove(course);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<bool> ExistsWithTitleAsync(string title)
+        {
+            return await _context.Courses.AnyAsync(c => c.Title == title);
+        }
+        public async Task<bool> IsCoursePublishedAsync(int courseId)
+        {
+            var course = await _context.Courses.FindAsync(courseId);
+            return course != null && course.IsPublished;
+        }
+        public async Task UpdateAsync(Course course)
+        {
+            _context.Courses.Update(course);
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<Course>> GetAllAsync(int page, int pageSize, string? filter = null)
         {
             var query = _context.Courses.AsQueryable();
@@ -45,7 +66,5 @@ namespace CursosOnline.Infrastructure.Repositories
             }
             return await query.CountAsync();
         }
-        public Task<bool> IsCoursePublishedAsync(int courseId) => throw new System.NotImplementedException();
-        public Task UpdateAsync(Course course) => throw new System.NotImplementedException();
     }
 } 

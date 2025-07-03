@@ -17,14 +17,29 @@ namespace CursosOnline.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task AddAsync(Lesson lesson) => throw new System.NotImplementedException();
-        public Task DeleteAsync(Lesson lesson) => throw new System.NotImplementedException();
+        public async Task AddAsync(Lesson lesson)
+        {
+            await _context.Lessons.AddAsync(lesson);
+            await _context.SaveChangesAsync();
+        }
+        public async Task DeleteAsync(Lesson lesson)
+        {
+            _context.Lessons.Remove(lesson);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<Lesson?> GetByIdAsync(int lessonId)
+        {
+            return await _context.Lessons.FindAsync(lessonId);
+        }
+        public async Task UpdateAsync(Lesson lesson)
+        {
+            _context.Lessons.Update(lesson);
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<Lesson>> GetByModuleIdAsync(int moduleId)
         {
             return await _context.Lessons.Where(l => l.ModuleId == moduleId).ToListAsync();
         }
-        public Task<Lesson?> GetByIdAsync(int lessonId) => throw new System.NotImplementedException();
-        public Task UpdateAsync(Lesson lesson) => throw new System.NotImplementedException();
 
         public async Task<int> GetTotalCountAsync(string? filter = null)
         {

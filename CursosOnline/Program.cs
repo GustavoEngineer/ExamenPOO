@@ -80,10 +80,26 @@ builder.Services.AddDbContext<CursosOnlineDbContext>(options =>
     options.UseMySQL(connectionString)
 );
 
+// Configuración de CORS
+var corsPolicyName = "AllowSpecificOrigin";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicyName,
+        policy =>
+        {
+            policy.WithOrigins("http://187.155.101.200", "https://187.155.101.200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Middleware de manejo de errores global
 app.UseMiddleware<ErrorHandlingMiddleware>();
+
+// Usar CORS
+app.UseCors(corsPolicyName);
 
 // Swagger
 if (app.Environment.IsDevelopment())

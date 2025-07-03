@@ -14,10 +14,37 @@ namespace CursosOnline.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task AddAsync(Instructor instructor) => throw new System.NotImplementedException();
-        public Task DeleteAsync(Instructor instructor) => throw new System.NotImplementedException();
-        public Task<bool> ExistsWithEmailAsync(string email) => throw new System.NotImplementedException();
-        public Task<bool> ExistsWithNameAsync(string name) => throw new System.NotImplementedException();
+        public async Task AddAsync(Instructor instructor)
+        {
+            await _context.Instructors.AddAsync(instructor);
+            await _context.SaveChangesAsync();
+        }
+        public async Task DeleteAsync(Instructor instructor)
+        {
+            _context.Instructors.Remove(instructor);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<bool> ExistsWithEmailAsync(string email)
+        {
+            return await _context.Instructors.AnyAsync(i => i.Email == email);
+        }
+        public async Task<bool> ExistsWithNameAsync(string name)
+        {
+            return await _context.Instructors.AnyAsync(i => i.Name == name);
+        }
+        public async Task<Instructor?> GetByIdAsync(int instructorId)
+        {
+            return await _context.Instructors.FindAsync(instructorId);
+        }
+        public async Task<bool> HasPublishedCoursesAsync(int instructorId)
+        {
+            return await _context.Courses.AnyAsync(c => c.InstructorId == instructorId && c.IsPublished);
+        }
+        public async Task UpdateAsync(Instructor instructor)
+        {
+            _context.Instructors.Update(instructor);
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<Instructor>> GetAllAsync(int page, int pageSize, string? filter = null)
         {
             var query = _context.Instructors.AsQueryable();
@@ -32,7 +59,6 @@ namespace CursosOnline.Infrastructure.Repositories
                 .Take(pageSize)
                 .ToListAsync();
         }
-        public Task<Instructor?> GetByIdAsync(int instructorId) => throw new System.NotImplementedException();
         public async Task<int> GetTotalCountAsync(string? filter = null)
         {
             var query = _context.Instructors.AsQueryable();
@@ -42,7 +68,5 @@ namespace CursosOnline.Infrastructure.Repositories
             }
             return await query.CountAsync();
         }
-        public Task<bool> HasPublishedCoursesAsync(int instructorId) => throw new System.NotImplementedException();
-        public Task UpdateAsync(Instructor instructor) => throw new System.NotImplementedException();
     }
 } 
