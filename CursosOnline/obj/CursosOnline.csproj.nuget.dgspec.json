@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DevMa\\Documents\\ME\\ExamenPOO\\CursosOnline\\CursosOnline.csproj": {}
+    "C:\\Users\\MSI\\Desktop\\Parcial2POO\\ExamenPOO\\CursosOnline\\CursosOnline.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DevMa\\Documents\\ME\\ExamenPOO\\CursosOnline\\CursosOnline.csproj": {
+    "C:\\Users\\MSI\\Desktop\\Parcial2POO\\ExamenPOO\\CursosOnline\\CursosOnline.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DevMa\\Documents\\ME\\ExamenPOO\\CursosOnline\\CursosOnline.csproj",
+        "projectUniqueName": "C:\\Users\\MSI\\Desktop\\Parcial2POO\\ExamenPOO\\CursosOnline\\CursosOnline.csproj",
         "projectName": "CursosOnline",
-        "projectPath": "C:\\Users\\DevMa\\Documents\\ME\\ExamenPOO\\CursosOnline\\CursosOnline.csproj",
-        "packagesPath": "C:\\Users\\DevMa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DevMa\\Documents\\ME\\ExamenPOO\\CursosOnline\\obj\\",
+        "projectPath": "C:\\Users\\MSI\\Desktop\\Parcial2POO\\ExamenPOO\\CursosOnline\\CursosOnline.csproj",
+        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MSI\\Desktop\\Parcial2POO\\ExamenPOO\\CursosOnline\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DevMa\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,7 +41,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -58,17 +61,17 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.13, )"
+              "version": "[9.0.6, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.13, )"
+              "version": "[9.0.6, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[8.0.13, )"
+              "version": "[9.0.6, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
@@ -102,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.107/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

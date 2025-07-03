@@ -15,6 +15,7 @@ namespace CursosOnline.Core.DTOs
         public string? Description { get; set; }
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "El ID del instructor debe ser mayor a 0")]
         public int InstructorId { get; set; }
     }
 

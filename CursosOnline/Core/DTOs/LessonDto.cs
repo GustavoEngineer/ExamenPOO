@@ -8,6 +8,7 @@ namespace CursosOnline.Core.DTOs
     public class LessonCreateUpdateDto
     {
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "El ID del módulo debe ser mayor a 0")]
         public int ModuleId { get; set; }
 
         [Required]
@@ -18,6 +19,7 @@ namespace CursosOnline.Core.DTOs
         public string Content { get; set; } = null!;
 
         [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "El orden debe ser mayor a 0")]
         public int OrderInModule { get; set; }
     }
 
