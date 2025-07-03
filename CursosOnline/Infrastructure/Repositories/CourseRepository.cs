@@ -1,0 +1,43 @@
+using CursosOnline.Core.Entities;
+using CursosOnline.Core.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CursosOnline.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace CursosOnline.Infrastructure.Repositories
+{
+    public class CourseRepository : ICourseRepository
+    {
+        private readonly CursosOnlineDbContext _context;
+        public CourseRepository(CursosOnlineDbContext context)
+        {
+            _context = context;
+        }
+
+        public Task AddAsync(Course course) => throw new System.NotImplementedException();
+        public Task DeleteAsync(Course course) => throw new System.NotImplementedException();
+        public Task<bool> ExistsWithTitleAsync(string title) => throw new System.NotImplementedException();
+        public async Task<IEnumerable<Course>> GetAllAsync(int page, int pageSize, string? filter = null)
+        {
+            var query = _context.Courses.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(c => c.Title.Contains(filter));
+            }
+
+            return await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+        public async Task<Course?> GetByIdAsync(int courseId)
+        {
+            return await _context.Courses.FindAsync(courseId);
+        }
+        public Task<int> GetTotalCountAsync(string? filter = null) => throw new System.NotImplementedException();
+        public Task<bool> IsCoursePublishedAsync(int courseId) => throw new System.NotImplementedException();
+        public Task UpdateAsync(Course course) => throw new System.NotImplementedException();
+    }
+} 

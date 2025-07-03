@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using CursosOnline.Core.Interfaces;
+using CursosOnline.Infrastructure.Repositories;
+using CursosOnline.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using CursosOnline.Core.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +64,22 @@ builder.Services.AddSwaggerGen(c =>
 
 // Dependency Injection
 builder.Services.AddSingleton<AuthService>();
-// Agrega aquí los demás servicios y repositorios
+builder.Services.AddScoped<CourseService>();
+builder.Services.AddScoped<InstructorService>();
+builder.Services.AddScoped<ModuleService>();
+builder.Services.AddScoped<LessonService>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
+builder.Services.AddScoped<ILessonRepository, LessonRepository>();
+
+// Agregar DbContext para MySQL
+builder.Services.AddDbContext<CursosOnlineDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    )
+);
 
 var app = builder.Build();
 
@@ -77,6 +97,23 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Seed de datos de ejemplo
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<CursosOnlineDbContext>();
+    if (!db.Courses.Any())
+    {
+        db.Courses.AddRange(new[]
+        {
+            new Course { Title = "Curso de Programación en C#", Description = "Aprende C# desde cero", IsPublished = true },
+            new Course { Title = "Curso de Entity Framework Core", Description = "Persistencia de datos con EF Core", IsPublished = false },
+            new Course { Title = "Curso de ASP.NET Core", Description = "Desarrollo web moderno con ASP.NET Core", IsPublished = true }
+        });
+        db.SaveChanges();
+    }
+}
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
