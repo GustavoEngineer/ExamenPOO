@@ -8,15 +8,15 @@ namespace CursosOnline.Core.DTOs
     public class CourseCreateUpdateDto
     {
         [Required]
-        [StringLength(200)]
-        public string Title { get; set; } = null!;
+        [StringLength(255)]
+        public string title { get; set; } = null!;
 
         [StringLength(1000)]
-        public string? Description { get; set; }
+        public string? description { get; set; }
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "El ID del instructor debe ser mayor a 0")]
-        public int InstructorId { get; set; }
+        public int instructor_id { get; set; }
     }
 
     /// <summary>
@@ -24,12 +24,12 @@ namespace CursosOnline.Core.DTOs
     /// </summary>
     public class CourseDto
     {
-        public int CourseId { get; set; }
-        public string Title { get; set; } = null!;
-        public string? Description { get; set; }
-        public int InstructorId { get; set; }
+        public int course_id { get; set; }
+        public string title { get; set; } = null!;
+        public string? description { get; set; }
+        public int instructor_id { get; set; }
         public string InstructorName { get; set; } = null!;
-        public bool IsPublished { get; set; }
-        public DateTime? PublishedDate { get; set; }
+        public bool is_published { get; set; }
+        public DateTime? published_date { get; set; }
     }
 } 

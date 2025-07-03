@@ -8,13 +8,13 @@ namespace CursosOnline.Core.DTOs
     public class InstructorCreateUpdateDto
     {
         [Required]
-        [StringLength(100)]
-        public string Name { get; set; } = null!;
+        [StringLength(255)]
+        public string name { get; set; } = null!;
 
         [Required]
         [EmailAddress]
-        [StringLength(150)]
-        public string Email { get; set; } = null!;
+        [StringLength(255)]
+        public string email { get; set; } = null!;
     }
 
     /// <summary>
@@ -22,8 +22,8 @@ namespace CursosOnline.Core.DTOs
     /// </summary>
     public class InstructorDto
     {
-        public int InstructorId { get; set; }
-        public string Name { get; set; } = null!;
-        public string Email { get; set; } = null!;
+        public int instructor_id { get; set; }
+        public string name { get; set; } = null!;
+        public string email { get; set; } = null!;
     }
 } 

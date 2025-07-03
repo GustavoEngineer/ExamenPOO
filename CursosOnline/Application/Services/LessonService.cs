@@ -28,11 +28,11 @@ namespace CursosOnline.Application.Services
             {
                 items.Add(new LessonDto
                 {
-                    LessonId = l.LessonId,
-                    ModuleId = l.ModuleId,
-                    Title = l.Title,
-                    Content = l.Content,
-                    OrderInModule = l.OrderInModule
+                    lesson_id = l.LessonId,
+                    module_id = l.ModuleId,
+                    title = l.Title,
+                    content = l.Content,
+                    order_in_module = l.OrderInModule
                 });
             }
             return items;
@@ -40,25 +40,25 @@ namespace CursosOnline.Application.Services
 
         public async Task<LessonDto> CreateAsync(LessonCreateUpdateDto dto)
         {
-            var module = await _moduleRepository.GetByIdAsync(dto.ModuleId) ?? throw new KeyNotFoundException("Módulo no encontrado.");
+            var module = await _moduleRepository.GetByIdAsync(dto.module_id) ?? throw new KeyNotFoundException("Módulo no encontrado.");
             // Regla: no modificar si el curso está publicado
             if (await _courseRepository.IsCoursePublishedAsync(module.CourseId))
                 throw new InvalidOperationException("No se puede agregar una lección a un curso publicado.");
             var lesson = new Lesson
             {
-                ModuleId = dto.ModuleId,
-                Title = dto.Title,
-                Content = dto.Content,
-                OrderInModule = dto.OrderInModule
+                ModuleId = dto.module_id,
+                Title = dto.title,
+                Content = dto.content,
+                OrderInModule = dto.order_in_module
             };
             await _lessonRepository.AddAsync(lesson);
             return new LessonDto
             {
-                LessonId = lesson.LessonId,
-                ModuleId = lesson.ModuleId,
-                Title = lesson.Title,
-                Content = lesson.Content,
-                OrderInModule = lesson.OrderInModule
+                lesson_id = lesson.LessonId,
+                module_id = lesson.ModuleId,
+                title = lesson.Title,
+                content = lesson.Content,
+                order_in_module = lesson.OrderInModule
             };
         }
 
@@ -69,17 +69,17 @@ namespace CursosOnline.Application.Services
             // Regla: no modificar si el curso está publicado
             if (await _courseRepository.IsCoursePublishedAsync(module.CourseId))
                 throw new InvalidOperationException("No se puede modificar una lección de un curso publicado.");
-            lesson.Title = dto.Title;
-            lesson.Content = dto.Content;
-            lesson.OrderInModule = dto.OrderInModule;
+            lesson.Title = dto.title;
+            lesson.Content = dto.content;
+            lesson.OrderInModule = dto.order_in_module;
             await _lessonRepository.UpdateAsync(lesson);
             return new LessonDto
             {
-                LessonId = lesson.LessonId,
-                ModuleId = lesson.ModuleId,
-                Title = lesson.Title,
-                Content = lesson.Content,
-                OrderInModule = lesson.OrderInModule
+                lesson_id = lesson.LessonId,
+                module_id = lesson.ModuleId,
+                title = lesson.Title,
+                content = lesson.Content,
+                order_in_module = lesson.OrderInModule
             };
         }
 

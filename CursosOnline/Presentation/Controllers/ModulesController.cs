@@ -29,7 +29,7 @@ namespace CursosOnline.Presentation.Controllers
         public async Task<ActionResult<ModuleDto>> Create([FromBody] ModuleCreateUpdateDto dto)
         {
             var result = await _service.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetByCourseId), new { courseId = result.CourseId }, result);
+            return CreatedAtAction(nameof(GetByCourseId), new { courseId = result.course_id }, result);
         }
 
         // PUT: api/modules/{id}

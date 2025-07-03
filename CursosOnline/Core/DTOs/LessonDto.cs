@@ -9,18 +9,18 @@ namespace CursosOnline.Core.DTOs
     {
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "El ID del módulo debe ser mayor a 0")]
-        public int ModuleId { get; set; }
+        public int module_id { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public string Title { get; set; } = null!;
+        [StringLength(255)]
+        public string title { get; set; } = null!;
 
         [Required]
-        public string Content { get; set; } = null!;
+        public string content { get; set; } = null!;
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "El orden debe ser mayor a 0")]
-        public int OrderInModule { get; set; }
+        public int order_in_module { get; set; }
     }
 
     /// <summary>
@@ -28,10 +28,10 @@ namespace CursosOnline.Core.DTOs
     /// </summary>
     public class LessonDto
     {
-        public int LessonId { get; set; }
-        public int ModuleId { get; set; }
-        public string Title { get; set; } = null!;
-        public string Content { get; set; } = null!;
-        public int OrderInModule { get; set; }
+        public int lesson_id { get; set; }
+        public int module_id { get; set; }
+        public string title { get; set; } = null!;
+        public string content { get; set; } = null!;
+        public int order_in_module { get; set; }
     }
 } 

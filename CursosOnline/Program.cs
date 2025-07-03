@@ -9,6 +9,7 @@ using CursosOnline.Infrastructure.Repositories;
 using CursosOnline.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using CursosOnline.Core.Entities;
+using MySql.EntityFrameworkCore.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,11 +75,9 @@ builder.Services.AddScoped<IModuleRepository, ModuleRepository>();
 builder.Services.AddScoped<ILessonRepository, LessonRepository>();
 
 // Agregar DbContext para MySQL
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("La cadena de conexión 'DefaultConnection' no está configurada.");
 builder.Services.AddDbContext<CursosOnlineDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
-    )
+    options.UseMySQL(connectionString)
 );
 
 var app = builder.Build();

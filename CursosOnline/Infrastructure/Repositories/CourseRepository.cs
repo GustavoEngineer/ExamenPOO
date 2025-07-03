@@ -36,7 +36,15 @@ namespace CursosOnline.Infrastructure.Repositories
         {
             return await _context.Courses.FindAsync(courseId);
         }
-        public Task<int> GetTotalCountAsync(string? filter = null) => throw new System.NotImplementedException();
+        public async Task<int> GetTotalCountAsync(string? filter = null)
+        {
+            var query = _context.Courses.AsQueryable();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(c => c.Title.Contains(filter));
+            }
+            return await query.CountAsync();
+        }
         public Task<bool> IsCoursePublishedAsync(int courseId) => throw new System.NotImplementedException();
         public Task UpdateAsync(Course course) => throw new System.NotImplementedException();
     }

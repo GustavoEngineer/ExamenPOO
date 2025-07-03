@@ -27,13 +27,12 @@ namespace CursosOnline.Application.Services
             {
                 items.Add(new CourseDto
                 {
-                    CourseId = c.CourseId,
-                    Title = c.Title,
-                    Description = c.Description,
-                    InstructorId = c.InstructorId,
-                    InstructorName = c.Instructor?.Name ?? string.Empty,
-                    IsPublished = c.IsPublished,
-                    PublishedDate = c.PublishedDate
+                    course_id = c.CourseId,
+                    title = c.Title,
+                    description = c.Description,
+                    instructor_id = c.InstructorId,
+                    is_published = c.IsPublished,
+                    published_date = c.PublishedDate
                 });
             }
             return new PagedResultDto<CourseDto>
@@ -48,53 +47,49 @@ namespace CursosOnline.Application.Services
 
         public async Task<CourseDto> CreateAsync(CourseCreateUpdateDto dto)
         {
-            var instructor = await _instructorRepository.GetByIdAsync(dto.InstructorId) ?? throw new KeyNotFoundException("Instructor no encontrado.");
+            var instructor = await _instructorRepository.GetByIdAsync(dto.instructor_id) ?? throw new KeyNotFoundException("Instructor no encontrado.");
             var course = new Course
             {
-                Title = dto.Title,
-                Description = dto.Description,
-                InstructorId = dto.InstructorId,
+                Title = dto.title,
+                Description = dto.description,
+                InstructorId = dto.instructor_id,
                 Instructor = instructor
             };
             await _courseRepository.AddAsync(course);
             return new CourseDto
             {
-                CourseId = course.CourseId,
-                Title = course.Title,
-                Description = course.Description,
-                InstructorId = course.InstructorId,
-                InstructorName = instructor.Name,
-                IsPublished = course.IsPublished,
-                PublishedDate = course.PublishedDate
+                course_id = course.CourseId,
+                title = course.Title,
+                description = course.Description,
+                instructor_id = course.InstructorId,
+                is_published = course.IsPublished,
+                published_date = course.PublishedDate
             };
         }
 
         public async Task<CourseDto> UpdateAsync(int id, CourseCreateUpdateDto dto)
         {
             var course = await _courseRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException("Curso no encontrado.");
-            // Regla: no modificar si publicado
             if (course.IsPublished)
                 throw new InvalidOperationException("No se puede modificar un curso publicado.");
-            course.Title = dto.Title;
-            course.Description = dto.Description;
-            course.InstructorId = dto.InstructorId;
+            course.Title = dto.title;
+            course.Description = dto.description;
+            course.InstructorId = dto.instructor_id;
             await _courseRepository.UpdateAsync(course);
             return new CourseDto
             {
-                CourseId = course.CourseId,
-                Title = course.Title,
-                Description = course.Description,
-                InstructorId = course.InstructorId,
-                InstructorName = course.Instructor?.Name ?? string.Empty,
-                IsPublished = course.IsPublished,
-                PublishedDate = course.PublishedDate
+                course_id = course.CourseId,
+                title = course.Title,
+                description = course.Description,
+                instructor_id = course.InstructorId,
+                is_published = course.IsPublished,
+                published_date = course.PublishedDate
             };
         }
 
         public async Task DeleteAsync(int id)
         {
             var course = await _courseRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException("Curso no encontrado.");
-            // Regla: no eliminar si publicado
             if (course.IsPublished)
                 throw new InvalidOperationException("No se puede eliminar un curso publicado.");
             await _courseRepository.DeleteAsync(course);
@@ -110,13 +105,12 @@ namespace CursosOnline.Application.Services
             await _courseRepository.UpdateAsync(course);
             return new CourseDto
             {
-                CourseId = course.CourseId,
-                Title = course.Title,
-                Description = course.Description,
-                InstructorId = course.InstructorId,
-                InstructorName = course.Instructor?.Name ?? string.Empty,
-                IsPublished = course.IsPublished,
-                PublishedDate = course.PublishedDate
+                course_id = course.CourseId,
+                title = course.Title,
+                description = course.Description,
+                instructor_id = course.InstructorId,
+                is_published = course.IsPublished,
+                published_date = course.PublishedDate
             };
         }
     }

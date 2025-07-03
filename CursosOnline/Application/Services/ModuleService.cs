@@ -26,11 +26,11 @@ namespace CursosOnline.Application.Services
             {
                 items.Add(new ModuleDto
                 {
-                    ModuleId = m.ModuleId,
-                    CourseId = m.CourseId,
-                    Title = m.Title,
-                    Description = m.Description,
-                    OrderInCourse = m.OrderInCourse
+                    module_id = m.ModuleId,
+                    course_id = m.CourseId,
+                    title = m.Title,
+                    description = m.Description,
+                    order_in_course = m.OrderInCourse
                 });
             }
             return items;
@@ -39,23 +39,23 @@ namespace CursosOnline.Application.Services
         public async Task<ModuleDto> CreateAsync(ModuleCreateUpdateDto dto)
         {
             // Regla: no modificar si el curso está publicado
-            if (await _courseRepository.IsCoursePublishedAsync(dto.CourseId))
+            if (await _courseRepository.IsCoursePublishedAsync(dto.course_id))
                 throw new InvalidOperationException("No se puede agregar un módulo a un curso publicado.");
             var module = new Module
             {
-                CourseId = dto.CourseId,
-                Title = dto.Title,
-                Description = dto.Description,
-                OrderInCourse = dto.OrderInCourse
+                CourseId = dto.course_id,
+                Title = dto.title,
+                Description = dto.description,
+                OrderInCourse = dto.order_in_course
             };
             await _moduleRepository.AddAsync(module);
             return new ModuleDto
             {
-                ModuleId = module.ModuleId,
-                CourseId = module.CourseId,
-                Title = module.Title,
-                Description = module.Description,
-                OrderInCourse = module.OrderInCourse
+                module_id = module.ModuleId,
+                course_id = module.CourseId,
+                title = module.Title,
+                description = module.Description,
+                order_in_course = module.OrderInCourse
             };
         }
 
@@ -65,17 +65,17 @@ namespace CursosOnline.Application.Services
             // Regla: no modificar si el curso está publicado
             if (await _courseRepository.IsCoursePublishedAsync(module.CourseId))
                 throw new InvalidOperationException("No se puede modificar un módulo de un curso publicado.");
-            module.Title = dto.Title;
-            module.Description = dto.Description;
-            module.OrderInCourse = dto.OrderInCourse;
+            module.Title = dto.title;
+            module.Description = dto.description;
+            module.OrderInCourse = dto.order_in_course;
             await _moduleRepository.UpdateAsync(module);
             return new ModuleDto
             {
-                ModuleId = module.ModuleId,
-                CourseId = module.CourseId,
-                Title = module.Title,
-                Description = module.Description,
-                OrderInCourse = module.OrderInCourse
+                module_id = module.ModuleId,
+                course_id = module.CourseId,
+                title = module.Title,
+                description = module.Description,
+                order_in_course = module.OrderInCourse
             };
         }
 
